@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\HttpClientExtension.cs" />
     <Compile Include="Extensions\JsonExtension.cs" />
     <Compile Include="Handlers\GetLastReleaseHandle.cs" />
     <Compile Include="Handlers\Models\IdResponse.cs" />

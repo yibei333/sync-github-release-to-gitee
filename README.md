@@ -18,11 +18,6 @@ jobs:
     permissions: write-all
     runs-on: windows-latest 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-
     - name: getExeFile
       run: (new-object System.Net.WebClient).DownloadFile('https://github.com/yibei333/sync-github-release-to-gitee/releases/download/1.0.0/SyncGithubReleaseToGitee.exe','./SyncGithubReleaseToGitee.exe')
 

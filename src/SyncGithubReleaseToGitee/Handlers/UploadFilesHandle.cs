@@ -19,10 +19,15 @@ namespace SyncGithubReleaseToGitee.Handlers
                     var content = new MultipartFormDataContent
                     {
                         { new StringContent(Context.Parameter.GiteeToken), "access_token" },
-                        { new StreamContent(new FileStream(x.FilePath, FileMode.Open, FileAccess.Read, FileShare.Read)), "file" }
+                        { new StreamContent(File.OpenRead(x.FilePath)), "file",x.FilePath }
                     };
-                    var response = client.PostAsync($"https://gitee.com/api/v5/repos/{Context.Parameter.Repo}/releases/{Context.ReleaseId}/attach_files", content).GetAwaiter().GetResult();
-                    if (!response.IsSuccessStatusCode) throw new Exception($"upload file '{x.Name}' failed");
+                    var response = client.PostAsync($"https://gitee.com/api/v5/repos/{Context.Parameter.Repo}/releases/{Context.ReleaseId}/attach_files?access_token={Context.Parameter.GiteeToken}", content).GetAwaiter().GetResult();
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        Console.WriteLine($"upload file '{x.Name}' failed:{response.StatusCode}");
+                        Console.WriteLine($"url:https://gitee.com/api/v5/repos/{Context.Parameter.Repo}/releases/{Context.ReleaseId}/attach_files");
+                        throw new Exception($"upload file '{x.Name}' failed");
+                    }
                 });
             }
         }
