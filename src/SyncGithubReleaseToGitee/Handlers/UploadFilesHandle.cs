@@ -21,7 +21,7 @@ namespace SyncGithubReleaseToGitee.Handlers
                         { new StringContent(Context.Parameter.GiteeToken), "access_token" },
                         { new StreamContent(new FileStream(x.FilePath, FileMode.Open, FileAccess.Read, FileShare.Read)), "file" }
                     };
-                    var response = client.PostAsync($"https://gitee.com/api/v5/repos/{Context.Parameter.Owner}/{Context.Parameter.Repo}/releases/{Context.ReleaseId}/attach_files", content).GetAwaiter().GetResult();
+                    var response = client.PostAsync($"https://gitee.com/api/v5/repos/{Context.Parameter.Repo}/releases/{Context.ReleaseId}/attach_files", content).GetAwaiter().GetResult();
                     if (!response.IsSuccessStatusCode) throw new Exception($"upload file '{x.Name}' failed");
                 });
             }

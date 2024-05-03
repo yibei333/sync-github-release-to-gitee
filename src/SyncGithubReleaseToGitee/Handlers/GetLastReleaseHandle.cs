@@ -16,7 +16,7 @@ namespace SyncGithubReleaseToGitee.Handlers
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Add("Authorization", Context.Parameter.GithubToken);
-                var response = client.GetAsync($"https://api.github.com/repos/{Context.Parameter.Owner}/{Context.Parameter.Repo}/releases/latest").GetAwaiter().GetResult();
+                var response = client.GetAsync($"https://api.github.com/repos/{Context.Parameter.Repo}/releases/latest").GetAwaiter().GetResult();
                 var json = response.Content?.ReadAsStringAsync()?.GetAwaiter().GetResult();
                 if (!response.IsSuccessStatusCode) throw new Exception($"get last release failed:{json}");
                 Context.LastRelease = json.Deserialize<LastReleaseResponse>();

@@ -23,12 +23,13 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: getExeFile
+      run: (new-object System.Net.WebClient).DownloadFile('https://github.com/yibei333/sync-github-release-to-gitee/releases/download/1.0.0/SyncGithubReleaseToGitee.exe','./SyncGithubReleaseToGitee.exe')
+
     - name: sync
       env:
         gitee_token: ${{secrets.GITEE_TOKEN}}
         github_token: ${{secrets.GITHUB_TOKEN}}
         repo: ${{github.repository}}
-        owner: ${{github.repository_owner_id}}
-      #https://github.com/yibei333/sync-github-release-to-gitee,将exe放置在你的仓库中，并修改下面的对应路径
-      run: ./pack/SyncGithubReleaseToGitee.exe
+      run: ./SyncGithubReleaseToGitee.exe
 ```

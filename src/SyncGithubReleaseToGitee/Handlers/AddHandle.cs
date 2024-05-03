@@ -25,7 +25,7 @@ namespace SyncGithubReleaseToGitee.Handlers
                     new KeyValuePair<string, string>("target_commitish", Context.LastRelease.TargetCommitish),
                 };
                 var content = new FormUrlEncodedContent(parameters);
-                var response = client.PostAsync($" https://gitee.com/api/v5/repos/{Context.Parameter.Owner}/{Context.Parameter.Repo}/releases", content).GetAwaiter().GetResult();
+                var response = client.PostAsync($" https://gitee.com/api/v5/repos/{Context.Parameter.Repo}/releases", content).GetAwaiter().GetResult();
                 var json = response.Content?.ReadAsStringAsync()?.GetAwaiter().GetResult();
                 if (!response.IsSuccessStatusCode) throw new Exception($"add release failed:{json}");
                 Context.ReleaseId = json.Deserialize<IdResponse>().Id;
